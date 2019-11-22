@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.maxSize" value="1000000" />
+	<package name="struts2" extends="struts-default">
+
+		<action name="hello" class="struts2.HelloWorldAction"
+			method="execute">
+			<interceptor-ref name="params"></interceptor-ref>
+			<interceptor-ref name="timer"></interceptor-ref>
+			<result name="success">/HelloWorld.jsp</result>
+			<result name="error">/AccessDenied.jsp</result>
+		</action>
+
+
+		<action name="something" class="struts2.SomeOtherClass"
+			method="execute">
+			<result name="success">/Something.jsp</result>
+
+			<!--结果类型 -->
+			<!-- <result name="error" type="dispatcher"> <param name="location">/AccessDenied.jsp</param> 
+				</result> -->
+			<!-- <result name="error">/AccessDenied.jsp</result> -->
+			<!-- <result name="error" type="freemarker"> <param name="location">/AccessDenied.jsp</param> 
+				</result> -->
+			<result name="error" type="redirect">
+				<param name="location">/AccessDenied.jsp</param>
+			</result>
+		</action>
+
+		<!-- 文件上传 -->
+		<action name="upload" class="struts2.UploadFileAction" method="execute">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/jpeg,image/png,image/gif,image/jpg</param>
+			</interceptor-ref>
+			<result name="success">/UploadSuccess.jsp</result>
+			<result name="error">/AccessDenied.jsp</result>
+		</action>
+		
+		
+		<action name="loginaction" class="struts2.LoginWithDBAction"
+			method="execute">
+			<result name="success">/success.jsp</result>
+			<result name="error">/AccessDenied.jsp</result>
+		</action>
+
+	</package>
+</struts>
